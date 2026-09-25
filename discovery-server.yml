@@ -1,0 +1,40 @@
+# discovery-server.yml — Config สำหรับ Eureka Discovery Server
+# จะถูกเสิร์ฟเมื่อ service ชื่อ discovery-server เรียก config-server
+# แต่ Hybrid Standalone: discovery-server ไม่ได้ดึงจาก config-server โดยตรง
+# ไฟล์นี้เป็น mirror/เอกสาร และสำหรับกรณีที่เปลี่ยนไปใช้ config import ในอนาคต
+
+server:
+  port: 8761
+
+spring:
+  application:
+    name: discovery-server
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+  server:
+    enable-self-preservation: true
+    renewal-percent-threshold: 0.85
+    eviction-interval-timer-in-ms: 10000
+    response-cache-update-interval-ms: 30000
+  instance:
+    hostname: localhost
+    prefer-ip-address: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,env,beans,metrics
+  endpoint:
+    health:
+      show-details: always
+
+info:
+  app:
+    name: discovery-server
+    description: Eureka Discovery Server

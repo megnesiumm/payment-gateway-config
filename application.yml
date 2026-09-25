@@ -1,11 +1,38 @@
+# Common config — ทุก service จะได้ค่านี้ (application.yml)
+# Per-service config อยู่ที่ {service-name}.yml
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,env,beans
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+  health:
+    diskspace:
+      enabled: true
+
+info:
+  app:
+    description: Payment Gateway - Common Config
+    version: 0.0.1-SNAPSHOT
+
+logging:
+  level:
+    root: INFO
+    com.example: DEBUG
+    org.springframework.cloud: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+# Default server management
 server:
-  port: 8761
+  error:
+    include-stacktrace: on_param
 
-spring:
-  application:
-    name: eureka-server
-
-eureka:
-  server:
-    enable-self-preservation: true
-    renewal-percent-threshold: 0.85
+---
+# สำหรับ service ที่ไม่ได้ระบุ port เอง จะใช้ common นี้ไม่ได้
+# แต่ละ service ควรกำหนด port ใน {service}.yml ของตัวเอง

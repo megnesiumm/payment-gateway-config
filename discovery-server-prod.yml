@@ -1,0 +1,19 @@
+# discovery-server-prod.yml — Prod override
+eureka:
+  server:
+    enable-self-preservation: true
+    renewal-percent-threshold: 0.85
+    eviction-interval-timer-in-ms: 30000
+    renewal-threshold-update-interval-ms: 900000
+  instance:
+    hostname: ${EUREKA_HOSTNAME:localhost}
+
+server:
+  port: ${PORT:8761}
+
+logging:
+  level:
+    com.netflix.eureka: WARN
+    root: WARN
+  file:
+    name: ./logs/discovery-server.log

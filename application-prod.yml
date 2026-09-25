@@ -1,0 +1,42 @@
+# application-prod.yml — Common prod config (ทุก service ที่ profile=prod)
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:mysql://prod-db:3306/paymentdb}
+    username: ${DB_USERNAME:payment_user}
+    password: ${DB_PASSWORD:{cipher}prod-encrypted-password}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+
+logging:
+  level:
+    root: WARN
+    com.example: INFO
+  file:
+    name: ./logs/app.log
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when-authorized
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URL:http://discovery-server:8761/eureka}
+    healthcheck:
+      enabled: true
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 30
+
+# Encryption example
+# app:
+#   secret-key: '{cipher}AQ...encrypted...'

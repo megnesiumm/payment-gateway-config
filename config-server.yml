@@ -1,0 +1,25 @@
+# config-server.yml — สำหรับ Config Server เอง (ถ้าต้องการ centralize config-server ด้วย)
+# ปัจจุบัน config-server เป็น standalone ไม่ดึงจากตัวเอง แต่ไฟล์นี้ไว้เป็นเอกสาร
+
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/megnesiumm/payment-gateway-config
+          default-label: main
+          clone-on-start: true
+          timeout: 10
+
+management:
+  server:
+    port: 8889
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
