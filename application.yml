@@ -1,1 +1,11 @@
-message: Hello from Config Server
+server:
+  port: 8761
+
+spring:
+  application:
+    name: eureka-server
+
+eureka:
+  server:
+    enable-self-preservation: true
+    renewal-percent-threshold: 0.85
